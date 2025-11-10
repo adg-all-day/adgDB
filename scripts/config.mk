@@ -1,0 +1,46 @@
+#--------------------
+# Project directories
+#--------------------
+DIR_SRC     	:= $(DIR_ROOT)/src
+DIR_SRC_TESTS  	:= $(DIR_ROOT)/tests
+DIR_BUILD   	:= $(DIR_ROOT)/build
+DIR_BUILD_LIB  	:= $(DIR_BUILD)/lib
+DIR_BUILD_TESTS	:= $(DIR_BUILD)/tests
+DIR_SCRIPTS		:= $(DIR_ROOT)/scripts
+DIR_INCLUDE		:= $(DIR_ROOT)/include
+
+#-------------------
+# Tool configuration
+#-------------------
+
+ifeq ($(OS),Windows_NT)
+	DETECTED_OS := Windows
+else
+	DETECTED_OS := $(shell sh -c 'uname 2>/dev/null || echo Unknown')
+endif
+
+ifeq ($(DETECTED_OS),Linux)
+	CC				:= gcc
+	LIB_DYN_NAME	:= libadgdb.so
+else ifeq ($(DETECTED_OS),Darwin)
+	CC				:= clang
+	LIB_DYN_NAME	:= libadgdb.dylib
+else
+	$(error adgDB doesn't support '$(DETECTED_OS)' OS yet )
+endif
+
+
+CCFLAGS		:= -std=gnu11 \
+			-O2 \
+			-fpic \
+			-masm=intel \
+			-Wall -Wextra -Wpedantic \
+			-D_FORTIFY_SOURCE=3 \
+			-fsanitize=bounds \
+			-fsanitize-undefined-trap-on-error \
+			-fstack-protector-strong \
+			-Wvla \
+			-Wimplicit-fallthrough 
+LDFLAGS		:= -lm -lfl
+TEST_LDFLAGS	:= $(LDFLAGS) -lcunit
+MAKE_FLAGS	:= --quiet --no-print-directory
