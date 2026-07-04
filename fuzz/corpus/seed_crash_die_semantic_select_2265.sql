@@ -1,0 +1,1 @@
+CREATE TABLE t (a INT); SELECT a FROM t x WHERE t.a = 1;

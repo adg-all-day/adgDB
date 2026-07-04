@@ -1,0 +1,2 @@
+CREATE TABLE t (a INT);
+INSERT INTO t VALUES (5 + (1/0));

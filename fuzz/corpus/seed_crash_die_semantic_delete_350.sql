@@ -1,0 +1,1 @@
+CREATE TABLE t (a INT); DELETE FROM t WHERE a IN (1) = 1;

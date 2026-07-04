@@ -1,0 +1,1 @@
+CREATE TABLE t (a INT); SELECT x.a * t.a AS v FROM t x;

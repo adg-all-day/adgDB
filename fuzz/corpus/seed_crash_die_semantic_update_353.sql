@@ -1,0 +1,1 @@
+CREATE TABLE t (a INT); UPDATE t SET a = 1 WHERE a IN (1) = 1;
